@@ -21,6 +21,8 @@ def main():
         for folder in ["test_seen"]:
             inlme = []
             incc = []
+            fns = os.listdir(datafolder + folder)
+            fns.sort()
             for fn in fns:
                 if not fn.startswith("dialogue"):
                     with open(datafolder + folder + "/" + fn, "r", encoding='utf8') as f:
