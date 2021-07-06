@@ -45,10 +45,12 @@ def main():
                         context += '<|endofcontext|>'
                         inlme += [(context).replace("\n", " ").replace("\r", "")]
                         incc += [context.replace('<|context|>', '').replace('<|endofcontext|>', '').replace('<|user|>', 'user:').replace('<|system|>', 'system:').replace('\t', ' ').strip(), '[DONE]']
+                    i+=1
             with open("lm.input."+folder+".eval.txt", "w", encoding='utf8') as f: #used as the input during evaluation of SimpleTOD and SimpleTOD extension
                 f.write('\n'.join(inlme))
             with open("lm.input."+folder+".cc.txt", "w", encoding='utf8') as f: #cc: chitchat
                 f.write('\n'.join(incc+['[EXIT]']))
+            
     else:
         for folder in ["train", "dev"]:
             if not os.path.exists(targetfolder + folder):
