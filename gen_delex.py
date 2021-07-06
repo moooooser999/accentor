@@ -16,7 +16,36 @@ def main():
 
     datafolder = args.data
     targetfolder = args.target
-    for folder in ["train", "dev", "test"]:
+    for folder in ["test_seen"]:
+        inlme = []
+        incc = []
+        for fn in fns:
+            if not fn.startswith("dialogue"):
+                with open(datafolder + folder + "/" + fn, "r", encoding='utf8') as f:
+                    data = json.load(f)
+                with open(targetfolder + folder + "/" + fn, "w", encoding='utf8') as f:
+                    json.dump(data, f, indent=1)
+                    continue
+            with open(datafolder + folder + "/" + fn, "r", encoding='utf8') as f:
+                data = json.load(f)
+            i = 0
+            while i < len(data):
+                for j in range(1, len(data[i]["turns"]), 2):
+                    context = '<|context|> '
+                    for k in range(j):
+                        if k % 2 == 0:
+                            context += '<|user|> '
+                        else:
+                            context += '<|system|> '
+                        context += data[i]["turns"][k]["utterance"] + " "
+                    context += '<|endofcontext|>'
+                    inlme += [(context).replace("\n", " ").replace("\r", "")]
+                    incc += [context.replace('<|context|>', '').replace('<|endofcontext|>', '').replace('<|user|>', 'user:').replace('<|system|>', 'system:').replace('\t', ' ').strip(), '[DONE]']
+        with open("lm.input."+folder+".eval.txt", "w", encoding='utf8') as f: #used as the input during evaluation of SimpleTOD and SimpleTOD extension
+            f.write('\n'.join(inlme))
+        with open("lm.input."+folder+".cc.txt", "w", encoding='utf8') as f: #cc: chitchat
+            f.write('\n'.join(incc+['[EXIT]']))
+    for folder in ["train", "dev"]:
         if not os.path.exists(targetfolder + folder):
             os.makedirs(targetfolder + folder)
         inlm = []
