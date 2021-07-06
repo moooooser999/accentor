@@ -2,8 +2,8 @@
 
 import json
 
-for fns in [["./lm.input.dev.eval.txt", "./lm.output.dev.cc.txt", "./dev.inference.gpt2_10epoch_1e-3_fp16.json", "lm.input.dev.eval.ff.txt"],
-            ["./lm.input.test.eval.txt", "./lm.output.test.cc.txt", "./test.inference.gpt2_10epoch_1e-3_fp16.json", "lm.input.test.eval.ff.txt"]]:
+for fns in [
+            ["./lm.input.test_seen.eval.txt", "./lm.output.test_seen.cc.txt", "./test_seen.inference.gpt2_10epoch_1e-3_fp16.json", "lm.input.test_seen.eval.ff.txt"]]:
     with open(fns[0], "r", encoding='utf8') as f:
         context = f.read().strip().split("\n")
     with open(fns[1], "r", encoding='utf8') as f:
