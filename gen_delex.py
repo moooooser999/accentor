@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--all", default=False, type=bool, required=False, help="use all dialogues rather than only augmented dialogues")
     parser.add_argument("--delexlevel", default=2, type=int, required=False, help="0: no delex; 1: delex values in \"slots\"; 2: delex values in both \"slots\" and \"actions\"")
-    parser.add_argument("--data", default="./accentor-sgd/", type=str, required=False, help="path to SGD")
+    parser.add_argument("--data", type=str, required=True, help="path to data")
     parser.add_argument("--target", default="./simpletod/", type=str, required=False, help="path to output")
     parser.add_argument("--mode", default="test", type=str, required=False, help="choose to prepare train data or test data")
     args = parser.parse_args()
